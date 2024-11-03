@@ -1,0 +1,32 @@
+.user-management-container {
+    display: flex; 
+    gap: 20px; 
+    padding: 20px; 
+  }
+  
+  .user-list-container {
+    width: 280px; 
+  }
+  
+  .user-form-container {
+    flex-grow: 1; 
+    max-width: 500px;
+  }
+  
+  .user-list {
+    max-height: 400px; 
+    overflow-y: auto; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 10px; 
+  }
+  
+  .user-form {
+    padding: 20px; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    display: flex; 
+    flex-direction: column;
+    gap: 10px; 
+  }
+  
