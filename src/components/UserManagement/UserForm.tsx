@@ -3,7 +3,7 @@ import { Button, TextField, MenuItem, Typography, Snackbar, Alert } from '@mui/m
 import { useDispatch } from 'react-redux';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker, LocalizationProvider, MobileDatePicker } from '@mui/x-date-pickers';
 import { addUser, deleteUser, updateUser } from '../../redux/actions';
 import { User } from '../../models/User';
 import './userForm.css';
@@ -113,7 +113,6 @@ const UserForm: React.FC<UserFormProps> = ({ selectedUserId, users, onFormReset 
         onChange={handleInputChange(setName, 'name')}
         fullWidth
         error={errors.name}
-        helperText={errors.name ? 'Field is required' : ''}
       />
       <TextField
         label="Surname"
@@ -121,13 +120,21 @@ const UserForm: React.FC<UserFormProps> = ({ selectedUserId, users, onFormReset 
         onChange={handleInputChange(setSurname, 'surname')}
         fullWidth
         error={errors.surname}
-        helperText={errors.surname ? 'Field is required' : ''}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
+        {/* used mobile for better*/}
+          <MobileDatePicker 
             label="Birthdate"
+            slotProps={{
+              textField:{
+                error:errors.birthdate,
+              }
+            }}
             value={birthdate ? dayjs(birthdate) : null}
-            onChange={(newValue) => newValue && setBirthdate(newValue.toDate())}
+            onChange={(newValue) => {
+            newValue && setBirthdate(newValue.toDate());
+            setErrors((prevErrors) => ({...prevErrors, birthdate: false}))
+            }}
           />
         </LocalizationProvider>
       <TextField
@@ -137,7 +144,6 @@ const UserForm: React.FC<UserFormProps> = ({ selectedUserId, users, onFormReset 
         onChange={handleInputChange(setGender, 'gender')}
         fullWidth
         error={errors.gender}
-        helperText={errors.gender ? 'Field is required' : ''}
       >
         <MenuItem value="">Select Gender</MenuItem>
         <MenuItem value="Male">Male</MenuItem>
